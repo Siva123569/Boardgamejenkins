@@ -1,18 +1,25 @@
 pipeline {
     agent any
-    
+
     tools {
-        maven 'Maven-3.9'
-        jdk 'jdk-17'
+        jdk 'java-17'
+        maven 'maven-3.8'
     }
 
     stages {
-        stage('git checkout') {
+        stage('git clone') {
             steps {
-               git branch: 'main',url: 'https://github.com/Siva123569/Boardgamejenkins.git'
+                git branch: 'main', url: 'https://github.com/Siva123569/Boardgamejenkins.git'
             }
         }
-        stage('package') {
+
+        stage('maven compile') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+
+        stage('maven package') {
             steps {
                 sh 'mvn package'
             }
